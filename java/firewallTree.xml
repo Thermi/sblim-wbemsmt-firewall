@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cus:customtreeconfig version="VERSION_2_2" xsi:schemaLocation="http://sblim.org/wbemsmt/tasklauncher/customtreeconfig ../../wbemsmt-commons/commons-bl/conf/customtreeconfig.xsd" xmlns:cus="http://sblim.org/wbemsmt/tasklauncher/customtreeconfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <cus:treenode>
+        <cus:description>root</cus:description>
+        <cus:treenode>
+            <cus:description>treefirewall</cus:description>
+            <cus:eventListener isSystemListener="true">
+                <cus:classname>org.sblim.wbemsmt.tasklauncher.InitAdapterListener</cus:classname>
+                <cus:param>
+                    <cus:param-name>adapterClassName</cus:param-name>
+                    <cus:param-value>org.sblim.wbemsmt.firewall.bl.adapter.FirewallCimAdapter</cus:param-value>
+                </cus:param>
+                <cus:param>
+                    <cus:param-name>taskName</cus:param-name>
+                    <cus:param-value>FIREWALL</cus:param-value>
+                </cus:param>
+            </cus:eventListener>
+        <cus:cimclass>
+            		<cus:classname>Linux_FirewallService</cus:classname>
+            		<cus:instanceSubnodes>
+            			<cus:treenode>
+            				<cus:description>FirewallOptions</cus:description>
+            				<cus:treenode>
+            					<cus:description>Interfaces</cus:description>
+            					<cus:eventListener>
+            						<cus:classname>org.sblim.wbemsmt.firewall.bl.listener.FInterfaceseditActionListener</cus:classname>
+            					</cus:eventListener>
+            				</cus:treenode>
+            				<cus:treenode>
+            					<cus:description>options</cus:description>
+            					<cus:treenode>
+            						<cus:description>supportedServices</cus:description>
+            						
+            					
+            					<cus:cimclass>
+            						<cus:classname>Linux_FirewallTrustedServices</cus:classname>
+            						<cus:instanceSubnodes><cus:eventListener>
+            							<cus:classname>org.sblim.wbemsmt.firewall.bl.listener.FSupportedServiceseditActionListener</cus:classname>
+            						</cus:eventListener></cus:instanceSubnodes>
+            						<cus:instanceNamingKey>serviceName</cus:instanceNamingKey>
+            						
+            					</cus:cimclass></cus:treenode>
+            					<cus:treenode>
+            						<cus:description>Ports</cus:description>
+            						<cus:cimclass>
+            							<cus:classname>Linux_FirewallManagedPorts</cus:classname>
+            							<cus:instanceSubnodes>
+            								<cus:eventListener>
+            									<cus:classname>org.sblim.wbemsmt.firewall.bl.listener.ManagedPorteditActionListener</cus:classname>
+            								</cus:eventListener>
+            								<cus:contextmenu>
+            									<cus:menuitem>
+            										<cus:description>DeletePort</cus:description>
+            										<cus:eventListener>
+            											<cus:classname>org.sblim.wbemsmt.firewall.bl.listener.ManagedPortdeleteActionListener</cus:classname>
+            										</cus:eventListener>
+            									</cus:menuitem>
+            								</cus:contextmenu></cus:instanceSubnodes>
+            							<cus:instanceNamingKey>InstanceID</cus:instanceNamingKey>
+            							
+            						</cus:cimclass>
+            						<cus:contextmenu>
+            							<cus:menuitem>
+            								<cus:description>AddPort</cus:description>
+            								<cus:eventListener>
+            									<cus:classname>org.sblim.wbemsmt.firewall.bl.listener.NewManagedPortcreateActionListener</cus:classname>
+            								</cus:eventListener>
+            							</cus:menuitem>
+            						</cus:contextmenu>
+            					</cus:treenode>
+            				</cus:treenode>
+            			</cus:treenode>
+            			<cus:eventListener>
+            				<cus:classname>org.sblim.wbemsmt.firewall.bl.listener.ServiceConfeditActionListener</cus:classname>
+            			</cus:eventListener>
+            		</cus:instanceSubnodes>
+            		<cus:instanceNamingKey>Name</cus:instanceNamingKey>
+            		
+            	</cus:cimclass></cus:treenode>
+    </cus:treenode>
+</cus:customtreeconfig>

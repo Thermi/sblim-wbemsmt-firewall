@@ -1,0 +1,5 @@
+!!EMPTY!!=!!EMPTY!!
+FirewallManagedPortContainer.role.interfacesForPort=interfacesForPort
+FSupportedServicesWithInterfacesContainer.role.interfacesList=interfacesList
+service.not.found=found
+FInterfacesListContainer.role.interfacesList=interfacesList

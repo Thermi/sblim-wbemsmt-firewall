@@ -1,0 +1,162 @@
+%define name                    sblim-wbemsmt-firewall
+%define version                 @PACKAGE_VERSION@
+%define build_release           @RELEASE_VERSION@
+%define release                 %{build_release}jpp
+%define section                 free
+
+
+###############################################################################
+
+Name:           %{name}
+Version:        %{version}
+Release:        %{release}
+License:        Eclipse Public License
+Url:            http://sblim.sourceforge.net/
+Group:          Systems Management/Web Application
+Vendor:         IBM
+Summary:        Provides a wbemsmt-based task that provides support to configure Linux iptables
+SOURCE0:        %{name}-%{version}-src.tar.bz2
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
+BuildArch:      noarch
+	
+#BuildRequires: jpackage-utils >= 0:1.5.32
+BuildRequires: ant >= 0:1.6
+#BuildRequires: sblim-wbemsmt-commons => 1.0
+#BuildRequires: sblim-cim-client >= 2.1.0
+#BuildRequires: servlet-api >= 2.5
+#BuildRequires: jsp-api >= 2.1
+#BuildRequires: jakarta-commons-lang >= 2.4
+#BuildRequires: jakarta-commons-collections >= 3.2.1
+#BuildRequires: jakarta-commons-cli >= 1.1
+#BuildRequires:  myfaces >= 1.2.6
+#BuildRequires:  myfaces-impl >= 1.2.6
+#BuildRequires:  tomahawk >= 1.1.8
+#BuildRequires:  xmlBeans >= 2.2.0
+#BuildRequires:  jsr173-1.0-api >= 1.0
+
+###############################################################################
+
+#Requires: jpackage-utils >= 0:1.5.32
+Requires: sblim-wbemsmt-commons => 1.0
+Requires: sblim-wbemsmt-webapp => 1.0
+#BuildRequires: sblim-cim-client >= 2.1.0
+#BuildRequires: servlet-api >= 2.5
+#BuildRequires: jsp-api >= 2.1
+#BuildRequires: jakarta-commons-lang >= 2.4
+#BuildRequires: jakarta-commons-collections >= 3.2.1
+#BuildRequires: jakarta-commons-cli >= 1.1
+#BuildRequires:  myfaces >= 1.2.6
+#BuildRequires:  myfaces-impl >= 1.2.6
+#BuildRequires:  tomahawk >= 1.1.8
+#BuildRequires:  xmlBeans >= 2.2.0
+#BuildRequires:  jsr173-1.0-api >= 1.0
+
+###############################################################################
+
+%description
+This module provides the wbemsmt-based task that provides the support to
+configure FIREWALL.
+It contains the generated data containers, the generated first class objects 
+and the business logic for the FIREWALL app. It also contains the generated cli 
+interface for the firewall task. 
+
+###############################################################################
+
+%prep
+%setup -q -n %{name}
+
+###############################################################################
+
+%build
+CLASSPATH=$(build-classpath sblim-cim-client)
+CLASSPATH=$(build-classpath commons-cli commons-lang):$CLASSPATH
+CLASSPATH=$(build-classpath jsp-api servlet-api):$CLASSPATH
+CLASSPATH=$(build-classpath myfaces-api myfaces-impl tomahawk xbean):$CLASSPATH
+CLASSPATH=$(build-classpath sblim-wbemsmt/sblim-wbemsmt-commons sblim-wbemsmt/sblim-wbemsmt-commons-launcher-config):$CLASSPATH
+export CLASSPATH
+
+ant build-jar
+
+
+###############################################################################
+
+%install
+rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_bindir}/
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/sblim-wbemsmt/tasklauncher.d
+install -d $RPM_BUILD_ROOT%{_javadir}/sblim-wbemsmt
+install -d $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+install -d $RPM_BUILD_ROOT%{_localstatedir}/lib/sblim-wbemsmt/help
+
+# Installation of documentation files
+install COPYING   $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/COPYING
+install AUTHORS   $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/AUTHORS
+install README    $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/README
+install ChangeLog $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/ChangeLog
+install NEWS      $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/NEWS
+install TroubleShooting $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/TroubleShooting
+install MultipleHostsSupport $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/MultipleHostsSupport
+
+install target/package/etc/sblim-wbemsmt/tasklauncher.d/firewall-task-config.xml $RPM_BUILD_ROOT%{_sysconfdir}/sblim-wbemsmt/tasklauncher.d/
+install target/package/cli-scripts/sblim-wbemsmt-firewall-cli.sh $RPM_BUILD_ROOT%{_bindir}/sblim-wbemsmt-firewall-cli.sh
+
+# Installation of java files
+install target/package/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/sblim-wbemsmt
+(
+  cd $RPM_BUILD_ROOT%{_javadir}/sblim-wbemsmt &&
+    ln -sf %{name}-%{version}.jar %{name}.jar;
+)
+
+# Moving help files to the webapp directory
+mv target/package/help/* $RPM_BUILD_ROOT%{_localstatedir}/lib/sblim-wbemsmt/help
+
+###############################################################################
+
+%post
+unset JAVA_HOME
+[ -z "$JAVA_HOME" ] && [ -r %{_sysconfdir}/java/java.conf ] && \
+    . %{_sysconfdir}/java/java.conf
+[ -z "$JAVA_HOME" ] && JAVA_HOME=%{_jvmdir}/java
+
+unset WBEMSMT_WEBAPP_HOME
+#[ -r %{_sysconfdir}/sblim-wbemsmt/sblim-wbemsmt-webapp.conf ] && . %{_sysconfdir}/sblim-wbemsmt/sblim-wbemsmt-webapp.conf
+[ -z "$WBEMSMT_WEBAPP_HOME" ] && WBEMSMT_WEBAPP_HOME=%{_localstatedir}/lib/sblim-wbemsmt-webapp/webapps/sblim-wbemsmt-webapp
+
+unset WBEMSMT_HELPDIR
+#[ -r %{_sysconfdir}/sblim-wbemsmt/sblim-wbemsmt-commons.conf ] && . %{_sysconfdir}/sblim-wbemsmt/sblim-wbemsmt-commons.conf
+[ -z "$WBEMSMT_HELPDIR" ] && WBEMSMT_HELPDIR=/var/lib/sblim-wbemsmt/help
+ln -sf %{_localstatedir}/lib/%{name}/help/plugins/org.sblim.wbemsmt.help.firewall $WBEMSMT_HELPDIR/plugins/org.sblim.wbemsmt.help.firewall
+
+build-jar-repository $WBEMSMT_WEBAPP_HOME/WEB-INF/lib sblim-wbemsmt/%{name}
+
+
+###############################################################################
+
+%preun
+unset WBEMSMT_WEBAPP_HOME
+#[ -r %{_sysconfdir}/sblim-wbemsmt/sblim-wbemsmt-webapp.conf ] && . %{_sysconfdir}/sblim-wbemsmt/sblim-wbemsmt-webapp.conf
+[ -z "$WBEMSMT_WEBAPP_HOME" ] && WBEMSMT_WEBAPP_HOME=%{_localstatedir}/lib/sblim-wbemsmt-webapp/webapps/sblim-wbemsmt-webapp
+rm -f $WBEMSMT_WEBAPP_HOME/WEB-INF/lib/\[sblim-wbemsmt\]\[%{name}.jar\]*.jar
+
+###############################################################################
+
+%files
+%defattr(0644,root,root,0755)
+%doc %{_docdir}/%{name}-%{version}/COPYING
+%doc %{_docdir}/%{name}-%{version}/AUTHORS
+%doc %{_docdir}/%{name}-%{version}/README
+%doc %{_docdir}/%{name}-%{version}/ChangeLog
+%doc %{_docdir}/%{name}-%{version}/NEWS
+%doc %{_docdir}/%{name}-%{version}/TroubleShooting
+%doc %{_docdir}/%{name}-%{version}/MultipleHostsSupport
+%{_localstatedir}/lib/sblim-wbemsmt/help/plugins/org.sblim.wbemsmt.help.firewall/*
+%{_javadir}/sblim-wbemsmt/%{name}.jar
+%{_javadir}/sblim-wbemsmt/%{name}-%{version}.jar
+%{_bindir}/sblim-wbemsmt-firewall-cli.sh
+%attr(444,root,tomcat) %config(noreplace) %{_sysconfdir}/sblim-wbemsmt/tasklauncher.d/firewall-task-config.xml
+
+###############################################################################
+%changelog
+
+* Wed Jun 17 2009 Jeremy Bongio <jbongio@us.ibm.com> 0.5.6-1
+  - Initial upload of release.

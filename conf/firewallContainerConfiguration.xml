@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--/**
+ *  Generated-File by XMLBeans
+ *
+ * © Copyright IBM Corp.  2009,2005
+ *
+ * THIS FILE IS PROVIDED UNDER THE TERMS OF THE ECLIPSE PUBLIC LICENSE
+ * ("AGREEMENT"). ANY USE, REPRODUCTION OR DISTRIBUTION OF THIS FILE
+ * CONSTITUTES RECIPIENTS ACCEPTANCE OF THE AGREEMENT.
+ *
+ * You can obtain a current copy of the Eclipse Public License from
+ * http://www.opensource.org/licenses/eclipse-1.0.php
+ *
+ * Author:     org.sblim.wbemsmt.dcg.util.DCGModelUtil
+ *
+ * Contributors: 
+ */-->
+<!--<cli:clientConfig version="VERSION_2_5" xsi:schemaLocation="http://sblim.org/wbemsmt/clientconfig ../../wbemsmt-tools/tools-dcg/conf/clientConfig.xsd" xmlns:cli="http://sblim.org/wbemsmt/clientconfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">-->
+<cli:clientConfig version="VERSION_2_3" xmlns:cmd="http://sblim.org/wbemsmt/cmd" xmlns:cli="http://sblim.org/wbemsmt/clientconfig">
+    <cli:environment documentationDirectory="../wbemsmt-firewall/docu" helpDirectory="../wbemsmt-firewall/help" application="FIREWALL">
+        <cli:adapterPackage id="adapterPackage" dir="../wbemsmt-firewall/java/" name="org.sblim.wbemsmt.firewall.bl.adapter"/>
+        <cli:wizardPackage id="wizardPackage" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.wizard"/>
+        <cli:adapter id="FirewallCimAdapter" adapterclass="FirewallCimAdapter" adapterPackageId="adapterPackage"/>
+        <cli:resourceBundle name="messages"/>
+        <cli:resourceBundle name="messagesFirewall"/>
+    </cli:environment>
+    <dcg:container-definitions xmlns:dcg="http://sblim.org/wbemsmt/dcg">
+        <dcg:environment>
+            <dcg:fcoPackage id="fcos" dir="../wbemsmt-firewall/bin" name="org.sblim.wbemsmt.firewall"/>
+            <dcg:mofinput description="CIM Schema" generate="false">
+                <dcg:fcoPackage id="cimschema" dir="../wbemsmt-commons/commons-cim-schema/" name="org.sblim.wbemsmt.schema.cim221"/>
+                <dcg:moffile location="../wbemsmt-commons-cim-schema/cim_2_21/supported/"/>
+                <dcg:moffile location="../wbemsmt-commons-cim-schema/cim_2_21/unsupported/Device/CIM_NetworkPort.mof"/>
+                <dcg:moffile location="../wbemsmt-commons-cim-schema/cim_2_21/unsupported/Device/CIM_LogicalPort.mof"/>
+            </dcg:mofinput>
+            <dcg:mofinput description="mofs for firewall" generate="true">
+                <dcg:fcoPackage id="fcosFromMof" dir="../wbemsmt-firewall/generated" name="org.sblim.wbemsmt.firewall.bl.fco"/>
+                <dcg:moffile location="../cmpi-firewall/model/Linux_FirewallElementConformsToProfile.mof"/>
+                <dcg:moffile location="../cmpi-firewall/model/Linux_FirewallInterface.mof"/>
+                <dcg:moffile location="../cmpi-firewall/model/Linux_FirewallManagedPorts.mof"/>
+                <dcg:moffile location="../cmpi-firewall/model/Linux_FirewallManagedPortsForInterface.mof"/>
+                <dcg:moffile location="../cmpi-firewall/model/Linux_FirewallRegisteredProfile.mof"/>
+                <dcg:moffile location="../cmpi-firewall/model/Linux_FirewallService.mof"/>
+                <dcg:moffile location="../cmpi-firewall/model/Linux_FirewallServiceConfiguration.mof"/>
+                <dcg:moffile location="../cmpi-firewall/model/Linux_FirewallServiceConfigurationForService.mof"/>
+                <dcg:moffile location="../cmpi-firewall/model/Linux_FirewallTrustedServices.mof"/>
+                <dcg:moffile location="../cmpi-firewall/model/Linux_FirewallTrustedServicesForInterface.mof"/>
+            </dcg:mofinput>
+            <dcg:containerInterfacePkg id="editContainerIf" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.bl.container.edit"/>
+            <dcg:containerInterfacePkg id="wizardContainerIf" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.bl.container.wizard"/>
+        </dcg:environment>
+        <dcg:container implPackageId="editImpl" name="WelcomeContainer" packageId="editContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="false" canModify="false" canDelete="false" isWizard="false" customLayouter="false" dynamic="false"/>
+        <dcg:container implPackageId="editImpl" name="FirewallServiceConfContainer" packageId="editContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="false" canModify="true" canDelete="false" isWizard="false" customLayouter="false" dynamic="false">
+            <dcg:fcoRelation fcoName="Linux_FirewallServiceConfiguration" fcoPackageId="org.sblim.wbemsmt.firewall.bl.fco"/>
+            <dcg:field name="configurationFile" dataType="STRING" userDefined="false" uiType="TEXTFIELD" fcoFieldName="Linux_FirewallServiceConfiguration.configurationFile">
+                <cmd:option long="configurationFile" scope="LOCAL_CONTAINER"/>
+            </dcg:field>
+            <dcg:field name="StartService" dataType="ACTION" userDefined="false" uiType="BUTTON" fcoFieldName="Linux_FirewallService.StartService">
+                <cmd:option long="startService" scope="LOCAL_CONTAINER" hasArgument="false"/>
+            </dcg:field>
+            <dcg:field name="StopService" dataType="ACTION" userDefined="false" uiType="BUTTON" fcoFieldName="Linux_FirewallService.StopService">
+                <cmd:option long="stopService" scope="LOCAL_CONTAINER" hasArgument="false"/>
+            </dcg:field>
+            <dcg:field name="restartService" dataType="ACTION" userDefined="true" uiType="BUTTON" fcoFieldName="userdefined" description="" orientation="LEFT" readOnly="false" required="false">
+                <cmd:option long="restartService" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="false"/>
+            </dcg:field>
+        </dcg:container>
+        <dcg:container implPackageId="editImpl" name="FirewallManagedPortContainer" packageId="editContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="true" canModify="true" canDelete="true" isWizard="false" customLayouter="true" dynamic="false">
+            <dcg:fcoRelation fcoName="Linux_FirewallManagedPorts" fcoPackageId="org.sblim.wbemsmt.firewall.bl.fco"/>
+            <dcg:field name="StartPort" dataType="STRING" userDefined="false" uiType="TEXTFIELD" fcoFieldName="Linux_FirewallManagedPorts.StartPort">
+                <cmd:option long="startPort" scope="LOCAL_CONTAINER"/>
+            </dcg:field>
+            <dcg:field name="EndPort" dataType="STRING" userDefined="false" uiType="TEXTFIELD" fcoFieldName="Linux_FirewallManagedPorts.EndPort">
+                <cmd:option long="endPort" scope="LOCAL_CONTAINER"/>
+            </dcg:field>
+            <dcg:field name="Protocol" dataType="INTEGER" userDefined="false" uiType="COMBOBOX" fcoFieldName="Linux_FirewallManagedPorts.Protocol" description="" orientation="LEFT" readOnly="false" required="false">
+                <cmd:option long="protocol" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+            <dcg:link linkedContainer="FInterfacesForPortContainer" linkedPackage="editContainerIf" occurrence="LIST" role="interfacesForPort" description=""/>
+        </dcg:container>
+        <dcg:container implPackageId="editImpl" name="FirewallSupportedServicesContainer" packageId="editContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="false" canModify="true" canDelete="false" isWizard="false" customLayouter="true" dynamic="false">
+            <dcg:field name="enableOnInterface" dataType="BOOLEAN" userDefined="true" uiType="CHECKBOX" fcoFieldName="userdefined" description="" orientation="LEFT" readOnly="false" required="false">
+                <cmd:option long="enableOnInterface" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+        </dcg:container>
+        <dcg:container implPackageId="editImpl" name="FirewallInterfacesContainer" packageId="editContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="false" canModify="true" canDelete="false" isWizard="false" customLayouter="true" dynamic="false">
+            <dcg:field name="isTrusted" dataType="BOOLEAN" userDefined="true" uiType="CHECKBOX" fcoFieldName="userdefined" description="" orientation="LEFT" readOnly="false" required="false">
+                <cmd:option long="isTrusted" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+        </dcg:container>
+        <dcg:container implPackageId="wizardContainerImpl" name="NewManagedPortWizard1Container" packageId="wizardContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="false" canModify="true" canDelete="false" isWizard="true" customLayouter="true" dynamic="false">
+            <dcg:field name="StartPort" dataType="STRING" userDefined="true" uiType="TEXTFIELD" fcoFieldName="userdefined" description="" orientation="LEFT" readOnly="false" required="true">
+                <cmd:option long="StartPort" scope="LOCAL_CONTAINER" required="true" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+            <dcg:field name="EndPort" dataType="STRING" userDefined="true" uiType="TEXTFIELD" fcoFieldName="userdefined" description="" orientation="LEFT" readOnly="false" required="false">
+                <cmd:option long="EndPort" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+            <dcg:field name="Protocol" dataType="INTEGER" userDefined="true" uiType="COMBOBOX" fcoFieldName="userdefined" description="" orientation="LEFT" readOnly="false" required="true">
+                <cmd:option long="Protocol" scope="LOCAL_CONTAINER" required="true" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+        </dcg:container>
+        <dcg:container implPackageId="wizardContainerImpl" name="NewManagedPortWizard2Container" packageId="wizardContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="false" canModify="true" canDelete="false" isWizard="true" customLayouter="false" dynamic="false">
+            <dcg:field name="StartPort" dataType="STRING" userDefined="true" uiType="TEXTFIELD" fcoFieldName="userdefined" description="" orientation="LEFT" readOnly="true" required="false">
+                <cmd:option long="startPort" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+            <dcg:field name="EndPort" dataType="STRING" userDefined="true" uiType="TEXTFIELD" fcoFieldName="userdefined" description="" orientation="LEFT" readOnly="true" required="false">
+                <cmd:option long="endport" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+            <dcg:field name="Protocol" dataType="STRING" userDefined="true" uiType="TEXTFIELD" fcoFieldName="userdefined" description="" orientation="LEFT" readOnly="true" required="false">
+                <cmd:option long="protocol" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+            <dcg:link linkedContainer="FInterfacesForServicesContainer" linkedPackage="editContainerIf" occurrence="LIST" role="interfacesListForPort" description=""/>
+        </dcg:container>
+        <dcg:container implPackageId="wizardContainerImpl" name="NewManagedPortWizard3Container" packageId="wizardContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="true" canModify="false" canDelete="false" isWizard="true" customLayouter="false" dynamic="false">
+            <dcg:field name="StartPort" dataType="STRING" userDefined="true" uiType="TEXTFIELD" fcoFieldName="userdefined" description="" orientation="LEFT" readOnly="true" required="false">
+                <cmd:option long="startport" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+            <dcg:field name="EndPort" dataType="STRING" userDefined="true" uiType="TEXTFIELD" fcoFieldName="userdefined" description="" orientation="LEFT" readOnly="true" required="false">
+                <cmd:option long="endport" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+            <dcg:field name="Protocol" dataType="STRING" userDefined="true" uiType="TEXTFIELD" fcoFieldName="userdefined" description="" orientation="LEFT" readOnly="true" required="false">
+                <cmd:option long="protocol" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+            <dcg:link linkedContainer="FInterfacesForPortSummaryContainer" linkedPackage="editContainerIf" occurrence="LIST" role="interfacesListForPortSummary" description=""/>
+        </dcg:container>
+        <dcg:container implPackageId="editImpl" name="FInterfaceContainer" packageId="editContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="false" canModify="true" canDelete="false" isWizard="false" customLayouter="false" dynamic="false">
+            <dcg:fcoRelation fcoPackageId="org.sblim.wbemsmt.firewall.bl.fco" fcoName="Linux_FirewallInterface" userdefined="false" description=""/>
+            <dcg:field name="DeviceID" dataType="STRING" userDefined="false" uiType="TEXTFIELD" fcoFieldName="Linux_FirewallInterface.DeviceID" description="" orientation="LEFT" readOnly="true" required="false">
+                <cmd:option long="deviceID" scope="LOCAL_CONTAINER" required="false" usedForSelection="true" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+            <dcg:field name="isTrusted" dataType="BOOLEAN" userDefined="false" uiType="CHECKBOX" fcoFieldName="Linux_FirewallInterface.isTrusted" description="" orientation="LEFT" readOnly="false" required="false">
+                <cmd:option long="isTrusted" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+        </dcg:container>
+        <dcg:container implPackageId="editImpl" name="FInterfacesListContainer" packageId="editContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="false" canModify="true" canDelete="false" isWizard="false" customLayouter="true" dynamic="false">
+            <dcg:link linkedContainer="FInterfaceContainer" linkedPackage="editContainerIf" occurrence="LIST" role="interfacesList" description=""/>
+        </dcg:container>
+        <dcg:container implPackageId="editImpl" name="FirewallServiceOptionsContainer" packageId="editContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="false" canModify="true" canDelete="false" isWizard="false" customLayouter="false" dynamic="false">
+            <dcg:fcoRelation fcoName="Linux_FirewallServiceConfiguration" fcoPackageId="org.sblim.wbemsmt.firewall.bl.fco"/>
+            <dcg:field name="IPTABLES_MODULES" dataType="STRING" userDefined="false" uiType="TEXTFIELD" fcoFieldName="Linux_FirewallServiceConfiguration.IPTABLES_MODULES">
+                <cmd:option long="iPTABLES_MODULES" scope="LOCAL_CONTAINER"/>
+            </dcg:field>
+            <dcg:field name="IPTABLES_MODULES_UNLOAD" dataType="BOOLEAN" userDefined="false" uiType="CHECKBOX" fcoFieldName="Linux_FirewallServiceConfiguration.IPTABLES_MODULES_UNLOAD">
+                <cmd:option long="iPTABLES_MODULES_UNLOAD" scope="LOCAL_CONTAINER"/>
+            </dcg:field>
+            <dcg:field name="IPTABLES_SAVE_COUNTER" dataType="BOOLEAN" userDefined="false" uiType="CHECKBOX" fcoFieldName="Linux_FirewallServiceConfiguration.IPTABLES_SAVE_COUNTER">
+                <cmd:option long="iPTABLES_SAVE_COUNTER" scope="LOCAL_CONTAINER"/>
+            </dcg:field>
+            <dcg:field name="IPTABLES_SAVE_ON_RESTART" dataType="BOOLEAN" userDefined="false" uiType="CHECKBOX" fcoFieldName="Linux_FirewallServiceConfiguration.IPTABLES_SAVE_ON_RESTART">
+                <cmd:option long="iPTABLES_SAVE_ON_RESTART" scope="LOCAL_CONTAINER"/>
+            </dcg:field>
+            <dcg:field name="IPTABLES_SAVE_ON_STOP" dataType="BOOLEAN" userDefined="false" uiType="CHECKBOX" fcoFieldName="Linux_FirewallServiceConfiguration.IPTABLES_SAVE_ON_STOP">
+                <cmd:option long="iPTABLES_SAVE_ON_STOP" scope="LOCAL_CONTAINER"/>
+            </dcg:field>
+            <dcg:field name="IPTABLES_STATUS_LINENUMBERS" dataType="BOOLEAN" userDefined="false" uiType="CHECKBOX" fcoFieldName="Linux_FirewallServiceConfiguration.IPTABLES_STATUS_LINENUMBERS">
+                <cmd:option long="iPTABLES_STATUS_LINENUMBERS" scope="LOCAL_CONTAINER"/>
+            </dcg:field>
+            <dcg:field name="IPTABLES_STATUS_NUMERIC" dataType="BOOLEAN" userDefined="false" uiType="CHECKBOX" fcoFieldName="Linux_FirewallServiceConfiguration.IPTABLES_STATUS_NUMERIC">
+                <cmd:option long="iPTABLES_STATUS_NUMERIC" scope="LOCAL_CONTAINER"/>
+            </dcg:field>
+            <dcg:field name="IPTABLES_STATUS_VERBOSE" dataType="BOOLEAN" userDefined="false" uiType="CHECKBOX" fcoFieldName="Linux_FirewallServiceConfiguration.IPTABLES_STATUS_VERBOSE">
+                <cmd:option long="iPTABLES_STATUS_VERBOSE" scope="LOCAL_CONTAINER"/>
+            </dcg:field>
+        </dcg:container>
+        <dcg:container implPackageId="editImpl" name="FSupportedServicesContainer" packageId="editContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="false" canModify="true" canDelete="false" isWizard="false" customLayouter="false" dynamic="false">
+            <dcg:fcoRelation fcoPackageId="org.sblim.wbemsmt.firewall.bl.fco" fcoName="Linux_FirewallTrustedServices" userdefined="false" description=""/>
+            <dcg:field name="ServiceName" dataType="STRING" userDefined="false" uiType="TEXTFIELD" fcoFieldName="Linux_FirewallTrustedServices.ServiceName" description="" orientation="LEFT" readOnly="true" required="false">
+                <cmd:option long="serviceName" scope="LOCAL_CONTAINER" required="false" usedForSelection="true" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+        </dcg:container>
+        <dcg:container implPackageId="editImpl" name="FInterfacesForServicesContainer" packageId="editContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="false" canModify="true" canDelete="false" isWizard="false" customLayouter="false" dynamic="false">
+            <dcg:fcoRelation fcoPackageId="org.sblim.wbemsmt.firewall.bl.fco" fcoName="Linux_FirewallInterface" userdefined="false" description=""/>
+            <dcg:field name="DeviceID" dataType="STRING" userDefined="false" uiType="TEXTFIELD" fcoFieldName="Linux_FirewallInterface.DeviceID" description="" orientation="LEFT" readOnly="true" required="false">
+                <cmd:option long="deviceID" scope="LOCAL_CONTAINER" required="false" usedForSelection="true" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+            <dcg:field name="isEnabled" dataType="BOOLEAN" userDefined="true" uiType="CHECKBOX" fcoFieldName="userdefined" description="" orientation="LEFT" readOnly="false" required="false">
+                <cmd:option long="isEnabled" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+        </dcg:container>
+        <dcg:container implPackageId="editImpl" name="FInterfacesForServicesListContainer" packageId="editContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="false" canModify="true" canDelete="false" isWizard="false" customLayouter="false" dynamic="false">
+            <dcg:link linkedContainer="FInterfacesForServicesContainer" linkedPackage="editContainerIf" occurrence="LIST" role="interfacesForServiceList" description=""/>
+            <dcg:link linkedContainer="FSupportedServicesContainer" linkedPackage="editContainerIf" occurrence="SINGLE" role="servicesList" description=""/>
+        </dcg:container>
+        <dcg:container implPackageId="editImpl" name="FSupportedServicesWithInterfacesContainer" packageId="editContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="false" canModify="true" canDelete="false" isWizard="false" customLayouter="true" dynamic="false">
+            <dcg:link linkedContainer="FSupportedServicesContainer" linkedPackage="editContainerIf" occurrence="SINGLE" role="serviceList" description=""/>
+            <dcg:link linkedContainer="FInterfacesForServicesContainer" linkedPackage="editContainerIf" occurrence="LIST" role="interfacesList" description=""/>
+        </dcg:container>
+        <dcg:container implPackageId="editImpl" name="FInterfacesForPortSummaryContainer" packageId="editContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="false" canModify="true" canDelete="false" isWizard="false" customLayouter="false" dynamic="false">
+            <dcg:fcoRelation fcoPackageId="org.sblim.wbemsmt.firewall.bl.fco" fcoName="Linux_FirewallInterface" userdefined="false" description=""/>
+            <dcg:field name="DeviceID" dataType="STRING" userDefined="false" uiType="TEXTFIELD" fcoFieldName="Linux_FirewallInterface.DeviceID" description="" orientation="LEFT" readOnly="true" required="false">
+                <cmd:option long="deviceID" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+            <dcg:field name="isEnabled" dataType="BOOLEAN" userDefined="true" uiType="CHECKBOX" fcoFieldName="userdefined" description="" orientation="LEFT" readOnly="true" required="false">
+                <cmd:option long="isEnabled" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+        </dcg:container>
+        <dcg:container implPackageId="editImpl" name="FInterfacesForPortContainer" packageId="editContainerIf" adapterId="FirewallCimAdapter" description="" canCreate="false" canModify="true" canDelete="false" isWizard="false" customLayouter="false" dynamic="false">
+            <dcg:fcoRelation fcoPackageId="org.sblim.wbemsmt.firewall.bl.fco" fcoName="Linux_FirewallManagedPorts" userdefined="false" description=""/>
+            <dcg:field name="DeviceID" dataType="STRING" userDefined="false" uiType="TEXTFIELD" fcoFieldName="Linux_FirewallInterface.DeviceID" description="" orientation="LEFT" readOnly="true" required="false">
+                <cmd:option long="deviceID" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+            <dcg:field name="isEnabled" dataType="BOOLEAN" userDefined="true" uiType="CHECKBOX" fcoFieldName="userdefined" description="" orientation="LEFT" readOnly="false" required="false">
+                <cmd:option long="isEnabled" scope="LOCAL_CONTAINER" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </dcg:field>
+        </dcg:container>
+    </dcg:container-definitions>
+    <pl:presentationLayer xmlns:pl="http://sblim.org/wbemsmt/pl">
+        <pl:environment doCmd="true" doJSF="true" doSwing="false" treeConfig="../wbemsmt-firewall/java/firewallTree.xml" taskConfig="../wbemsmt-firewall/../wbemsmt-firewall/conf/firewall-task-config.xml">
+            <pl:listenerPackage packageId="listener1">
+                <pl:delegationPackage id="listener1Delegatee" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.bl.listener"/>
+                <pl:jsfPackage id="listener1Jsf" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.bl.listener.jsf"/>
+                <pl:swingPackage id="listener1Swing" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.bl.listener.jswing"/>
+                <pl:cmdPackage id="listener1Cmd" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.bl.listener.cli"/>
+            </pl:listenerPackage>
+            <pl:containerImplPackage packageId="editImpl">
+                <pl:jsfPackage id="editImplJsf" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.bl.container.edit.jsf"/>
+                <pl:swingPackage id="editImplSwing" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.bl.container.edit.jswing"/>
+                <pl:cmdPackage id="editImplCmd" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.bl.container.edit.cli"/>
+            </pl:containerImplPackage>
+            <pl:containerImplPackage packageId="wizardContainerImpl">
+                <pl:jsfPackage id="wizardContainerImplJsf" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.bl.container.wizard.jsf"/>
+                <pl:swingPackage id="wizardContainerImplSwing" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.bl.container.wizard.jswing"/>
+                <pl:cmdPackage id="wizardContainerImplCmd" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.bl.container.wizard.cli"/>
+            </pl:containerImplPackage>
+            <pl:wizardImplPackage packageId="wizardImpl">
+                <pl:jsfPackage id="wizardImplJsf" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.bl.container.wizard.jsf"/>
+                <pl:swingPackage id="wizardImplSwing" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.bl.container.wizard.jswing"/>
+                <pl:cmdPackage id="wizardImplCmd" dir="../wbemsmt-firewall/generated/" name="org.sblim.wbemsmt.firewall.bl.container.wizard.cli"/>
+            </pl:wizardImplPackage>
+            <pl:commandsPackage id="commands" dir="../wbemsmt-firewall/java/" name="org.sblim.wbemsmt.firewall.cli"/>
+        </pl:environment>
+        <pl:createAction id="NewManagedPortcreateAction" traceContainerContainerId="NewManagedPortWizard1Container" traceContainerPackageId="wizardContainerIf">
+            <pl:actionListener>
+                <pl:actionListenerClassDefinition name="NewManagedPortcreateActionListener" packageId="listener1"/>
+            </pl:actionListener>
+            <pl:wizard id="NewManagedPortwizard" description="">
+                <pl:wizardClass>
+                    <pl:wizardClassDefinition name="NewManagedPortWizard1" packageId="wizardImpl"/>
+                </pl:wizardClass>
+                <pl:wizardContainer>
+                    <pl:wizardContainerClassDefinition name="NewManagedPortWizardContainer1" packageId="wizardPackage"/>
+                </pl:wizardContainer>
+                <pl:wizardPanel id="NewManagedPortpanel1" isFirst="true" isLast="false" linkedContainer="NewManagedPortWizard1Container" linkedPackage="wizardContainerIf"/>
+                <pl:wizardPanel id="NewManagedPortpanel2" isFirst="false" isLast="false" linkedContainer="NewManagedPortWizard2Container" linkedPackage="wizardContainerIf"/>
+                <pl:wizardPanel id="NewManagedPortpanel3" isFirst="false" isLast="true" linkedContainer="NewManagedPortWizard3Container" linkedPackage="wizardContainerIf"/>
+            </pl:wizard>
+            <cmd:command commandName="CreateManagedPortCommand">
+                <cmd:option long="interfacesEnabled" scope="LOCAL_ACTION" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+            </cmd:command>
+        </pl:createAction>
+        <pl:editAction id="ServiceConfeditAction" saveSinglePanels="false">
+            <pl:actionListener>
+                <pl:actionListenerClassDefinition name="ServiceConfeditActionListener" packageId="listener1"/>
+            </pl:actionListener>
+            <pl:editPanel>
+                <pl:tab caption="ServiceTab">
+                    <pl:childEditPanel caption="ServiceConfeditPanel" linkedContainer="FirewallServiceConfContainer" linkedPackage="editContainerIf">
+                        <cmd:command commandName="EditServiceConfCommand"/>
+                    </pl:childEditPanel>
+                </pl:tab>
+                <pl:tab caption="ServiceOptionsTab">
+                    <pl:childEditPanel caption="ServiceOptionseditPanel" linkedContainer="FirewallServiceOptionsContainer" linkedPackage="editContainerIf">
+                        <cmd:command commandName="EditServiceOptionsCommand"/>
+                    </pl:childEditPanel>
+                </pl:tab>
+            </pl:editPanel>
+        </pl:editAction>
+        <pl:editAction id="ManagedPorteditAction" saveSinglePanels="false">
+            <pl:actionListener>
+                <pl:actionListenerClassDefinition name="ManagedPorteditActionListener" packageId="listener1"/>
+            </pl:actionListener>
+            <pl:editPanel>
+                <pl:childEditPanel caption="ManagedPorteditPanel" linkedContainer="FirewallManagedPortContainer" linkedPackage="editContainerIf">
+                    <cmd:command commandName="EditManagedPortCommand">
+                        <cmd:option long="instanceID" scope="LOCAL_ACTION" required="false" usedForSelection="true" duplicateOK="false" comment="" hasArgument="true"/>
+                        <cmd:option long="deviceID" scope="LOCAL_ACTION" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+                        <cmd:option long="isEnabled" scope="LOCAL_ACTION" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+                    </cmd:command>
+                </pl:childEditPanel>
+            </pl:editPanel>
+        </pl:editAction>
+        <pl:editAction id="InterfaceseditAction" saveSinglePanels="false">
+            <pl:actionListener>
+                <pl:actionListenerClassDefinition name="InterfaceseditActionListener" packageId="listener1"/>
+            </pl:actionListener>
+            <pl:editPanel>
+                <pl:childEditPanel caption="InterfaceseditPanel" linkedContainer="FirewallInterfacesContainer" linkedPackage="editContainerIf">
+                    <cmd:command commandName="EditInterfacesCommand1"/>
+                </pl:childEditPanel>
+            </pl:editPanel>
+        </pl:editAction>
+        <pl:editAction id="SupportedServiceseditAction" saveSinglePanels="false">
+            <pl:actionListener>
+                <pl:actionListenerClassDefinition name="SupportedServiceseditActionListener" packageId="listener1"/>
+            </pl:actionListener>
+            <pl:editPanel>
+                <pl:childEditPanel caption="SupportedServiceseditPanel" linkedContainer="FirewallSupportedServicesContainer" linkedPackage="editContainerIf">
+                    <cmd:command commandName="EditSupportedServicesCommand1"/>
+                </pl:childEditPanel>
+            </pl:editPanel>
+        </pl:editAction>
+        <pl:editAction id="FInterfaceseditAction" saveSinglePanels="false">
+            <pl:actionListener>
+                <pl:actionListenerClassDefinition name="FInterfaceseditActionListener" packageId="listener1"/>
+            </pl:actionListener>
+            <pl:editPanel>
+                <pl:childEditPanel caption="InterfaceseditPanel" linkedContainer="FInterfacesListContainer" linkedPackage="editContainerIf">
+                    <cmd:command commandName="EditInterfacesCommand">
+                        <cmd:option long="deviceID" scope="LOCAL_ACTION" required="true" usedForSelection="true" duplicateOK="false" comment="" hasArgument="true"/>
+                        <cmd:option long="isTrusted" scope="LOCAL_ACTION" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+                    </cmd:command>
+                </pl:childEditPanel>
+            </pl:editPanel>
+        </pl:editAction>
+        <pl:editAction id="FSupportedServiceseditAction" saveSinglePanels="false">
+            <pl:actionListener>
+                <pl:actionListenerClassDefinition name="FSupportedServiceseditActionListener" packageId="listener1"/>
+            </pl:actionListener>
+            <pl:editPanel>
+                <pl:childEditPanel caption="FSupportedServiceseditPanel" linkedContainer="FSupportedServicesWithInterfacesContainer" linkedPackage="editContainerIf">
+                    <cmd:command commandName="EditSupportedServicesCommand">
+                        <cmd:option long="serviceName" scope="LOCAL_ACTION" required="false" usedForSelection="true" duplicateOK="false" comment="" hasArgument="true"/>
+                        <cmd:option long="deviceID" scope="LOCAL_ACTION" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+                        <cmd:option long="isEnabled" scope="LOCAL_ACTION" required="false" usedForSelection="false" duplicateOK="false" comment="" hasArgument="true"/>
+                    </cmd:command>
+                </pl:childEditPanel>
+            </pl:editPanel>
+        </pl:editAction>
+        <pl:deleteAction id="ManagedPortdeleteAction" linkedContainer="FirewallManagedPortContainer" linkedPackage="editContainerIf">
+            <pl:actionListener>
+                <pl:actionListenerClassDefinition name="ManagedPortdeleteActionListener" packageId="listener1"/>
+            </pl:actionListener>
+            <cmd:command commandName="DeleteManagedPortCommand">
+                <cmd:option long="instanceID" scope="LOCAL_ACTION" required="true" usedForSelection="true" duplicateOK="false" comment="" hasArgument="true"/>
+            </cmd:command>
+        </pl:deleteAction>
+        <pl:welcomeAction linkedContainer="WelcomeContainer" linkedPackage="editContainerIf">
+            <pl:actionListener>
+                <pl:actionListenerClassDefinition name="WelcomeListener" packageId="listener1" useCurrentTreeNodeForSelection="true"/>
+            </pl:actionListener>
+        </pl:welcomeAction>
+        <cmd:commands>
+            <cmd:option long="httpProtocolType" required="false" usedForSelection="true" duplicateOK="false" scope="GLOBAL_WBEMSMT_COMMUNICATION" defaultValue="http"/>
+            <cmd:option long="hostname" required="true" usedForSelection="true" duplicateOK="false" scope="GLOBAL_WBEMSMT_COMMUNICATION"/>
+            <cmd:option long="port" required="false" usedForSelection="true" duplicateOK="false" scope="GLOBAL_WBEMSMT_COMMUNICATION" defaultValue="5988"/>
+            <cmd:option long="namespace" required="false" usedForSelection="true" duplicateOK="false" scope="GLOBAL_WBEMSMT_COMMUNICATION" defaultValue="/root/cimv2"/>
+            <cmd:option long="user" required="false" usedForSelection="true" duplicateOK="false" scope="GLOBAL_WBEMSMT_COMMUNICATION" defaultValue="none"/>
+            <cmd:option long="password" required="false" usedForSelection="true" duplicateOK="false" scope="GLOBAL_WBEMSMT_COMMUNICATION" defaultValue="none"/>
+            <cmd:option long="publickeyfile" required="false" usedForSelection="true" duplicateOK="false" scope="GLOBAL_WBEMSMT_COMMUNICATION" defaultValue="none"/>
+            <cmd:option long="privatekeyfile" required="false" usedForSelection="true" duplicateOK="false" scope="GLOBAL_WBEMSMT_COMMUNICATION" defaultValue="none"/>
+            <cmd:option short="L" long="locale" required="false" usedForSelection="false" duplicateOK="false" scope="GLOBAL_WBEMSMT_COMMON" defaultValue="none"/>
+            <cmd:option short="h" long="help" required="false" usedForSelection="false" duplicateOK="false" scope="GLOBAL_WBEMSMT_COMMON" defaultValue="none"/>
+            <cmd:option short="?" required="false" usedForSelection="false" duplicateOK="false" scope="GLOBAL_WBEMSMT_COMMON" defaultValue="none"/>
+        </cmd:commands>
+    </pl:presentationLayer>
+</cli:clientConfig>

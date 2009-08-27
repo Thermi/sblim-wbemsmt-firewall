@@ -1,0 +1,338 @@
+{anchor:Index}
+| *editContainerIf* |  	[#editContainerIf.FInterfaceContainer] \\  	[#editContainerIf.FInterfacesForPortContainer] \\  	[#editContainerIf.FInterfacesForPortSummaryContainer] \\  	[#editContainerIf.FInterfacesForServicesContainer] \\  	[#editContainerIf.FInterfacesForServicesListContainer] \\  	[#editContainerIf.FInterfacesListContainer] \\  	[#editContainerIf.FSupportedServicesContainer] \\  	[#editContainerIf.FSupportedServicesWithInterfacesContainer] \\  	[#editContainerIf.FirewallInterfacesContainer] \\  	[#editContainerIf.FirewallManagedPortContainer] \\  	[#editContainerIf.FirewallServiceConfContainer] \\  	[#editContainerIf.FirewallServiceOptionsContainer] \\  	[#editContainerIf.FirewallSupportedServicesContainer] \\  	[#editContainerIf.WelcomeContainer] \\  |
+| *wizardContainerIf* |  	[#wizardContainerIf.NewManagedPortWizard1Container] \\  	[#wizardContainerIf.NewManagedPortWizard2Container] \\  	[#wizardContainerIf.NewManagedPortWizard3Container] \\  |
+
+
+[#Index]
+{anchor:editContainerIf.FInterfaceContainer}
+{panel:title=editContainerIf.FInterfaceContainer|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ | org.sblim.wbemsmt.firewall.bl.fco.Linux_FirewallInterface |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.edit |
+| *Actions* | MODIFY \\ |
+| *CustomLayouter* \\ | --- |
+*Fields:*
+| *Fieldname* | *DataType* | *UIType* | *related FCO Field* | *Constraints* | *Commandline* |
+| DeviceID | STRING | TEXTFIELD | Linux_FirewallInterface.DeviceID \\ | Readonly | -deviceID, Optional,no default, Used for selection |
+| isTrusted | BOOLEAN | CHECKBOX | Linux_FirewallInterface.isTrusted \\ | --- | -isTrusted, Optional,no default |
+
+{panel}
+
+	
+
+[#Index]
+{anchor:editContainerIf.FInterfacesForPortContainer}
+{panel:title=editContainerIf.FInterfacesForPortContainer|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ | org.sblim.wbemsmt.firewall.bl.fco.Linux_FirewallManagedPorts |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.edit |
+| *Actions* | MODIFY \\ |
+| *CustomLayouter* \\ | --- |
+*Fields:*
+| *Fieldname* | *DataType* | *UIType* | *related FCO Field* | *Constraints* | *Commandline* |
+| DeviceID | STRING | TEXTFIELD | Linux_FirewallInterface.DeviceID \\ | Readonly | -deviceID, Optional,no default |
+| isEnabled | BOOLEAN | CHECKBOX | userdefined \\ | Userdefined | -isEnabled, Optional,no default |
+
+{panel}
+
+	
+
+[#Index]
+{anchor:editContainerIf.FInterfacesForPortSummaryContainer}
+{panel:title=editContainerIf.FInterfacesForPortSummaryContainer|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ | org.sblim.wbemsmt.firewall.bl.fco.Linux_FirewallInterface |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.edit |
+| *Actions* | MODIFY \\ |
+| *CustomLayouter* \\ | --- |
+*Fields:*
+| *Fieldname* | *DataType* | *UIType* | *related FCO Field* | *Constraints* | *Commandline* |
+| DeviceID | STRING | TEXTFIELD | Linux_FirewallInterface.DeviceID \\ | Readonly | -deviceID, Optional,no default |
+| isEnabled | BOOLEAN | CHECKBOX | userdefined \\ | Readonly, Userdefined | -isEnabled, Optional,no default |
+
+{panel}
+
+	
+
+[#Index]
+{anchor:editContainerIf.FInterfacesForServicesContainer}
+{panel:title=editContainerIf.FInterfacesForServicesContainer|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ | org.sblim.wbemsmt.firewall.bl.fco.Linux_FirewallInterface |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.edit |
+| *Actions* | MODIFY \\ |
+| *CustomLayouter* \\ | --- |
+*Fields:*
+| *Fieldname* | *DataType* | *UIType* | *related FCO Field* | *Constraints* | *Commandline* |
+| DeviceID | STRING | TEXTFIELD | Linux_FirewallInterface.DeviceID \\ | Readonly | -deviceID, Optional,no default, Used for selection |
+| isEnabled | BOOLEAN | CHECKBOX | userdefined \\ | Userdefined | -isEnabled, Optional,no default |
+
+{panel}
+
+	
+
+[#Index]
+{anchor:editContainerIf.FInterfacesForServicesListContainer}
+{panel:title=editContainerIf.FInterfacesForServicesListContainer|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ |  ---  |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.edit |
+| *Actions* | MODIFY \\ |
+| *CustomLayouter* \\ | --- |
+
+*Relations*
+| *RelationType&nbsp;* | *&nbsp;related DataContainer* \\ | *&nbsp;Additional Information* \\ |
+| Link | [#editContainerIf.FInterfacesForServicesContainer] | Rolename: interfacesForServiceList, Type: LIST |
+| Link | [#editContainerIf.FSupportedServicesContainer] | Rolename: servicesList, Type: SINGLE |
+{panel}
+
+	
+
+[#Index]
+{anchor:editContainerIf.FInterfacesListContainer}
+{panel:title=editContainerIf.FInterfacesListContainer|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ |  ---  |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.edit |
+| *Actions* | MODIFY \\ |
+| *CustomLayouter* \\ | X |
+
+*Relations*
+| *RelationType&nbsp;* | *&nbsp;related DataContainer* \\ | *&nbsp;Additional Information* \\ |
+| Link | [#editContainerIf.FInterfaceContainer] | Rolename: interfacesList, Type: LIST |
+{panel}
+
+	
+
+[#Index]
+{anchor:editContainerIf.FSupportedServicesContainer}
+{panel:title=editContainerIf.FSupportedServicesContainer|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ | org.sblim.wbemsmt.firewall.bl.fco.Linux_FirewallTrustedServices |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.edit |
+| *Actions* | MODIFY \\ |
+| *CustomLayouter* \\ | --- |
+*Fields:*
+| *Fieldname* | *DataType* | *UIType* | *related FCO Field* | *Constraints* | *Commandline* |
+| ServiceName | STRING | TEXTFIELD | Linux_FirewallTrustedServices.ServiceName \\ | Readonly | -serviceName, Optional,no default, Used for selection |
+
+{panel}
+
+	
+
+[#Index]
+{anchor:editContainerIf.FSupportedServicesWithInterfacesContainer}
+{panel:title=editContainerIf.FSupportedServicesWithInterfacesContainer|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ |  ---  |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.edit |
+| *Actions* | MODIFY \\ |
+| *CustomLayouter* \\ | X |
+
+*Relations*
+| *RelationType&nbsp;* | *&nbsp;related DataContainer* \\ | *&nbsp;Additional Information* \\ |
+| Link | [#editContainerIf.FSupportedServicesContainer] | Rolename: serviceList, Type: SINGLE |
+| Link | [#editContainerIf.FInterfacesForServicesContainer] | Rolename: interfacesList, Type: LIST |
+{panel}
+
+	
+
+[#Index]
+{anchor:editContainerIf.FirewallInterfacesContainer}
+{panel:title=editContainerIf.FirewallInterfacesContainer|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ |  ---  |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.edit |
+| *Actions* | MODIFY \\ |
+| *CustomLayouter* \\ | X |
+*Fields:*
+| *Fieldname* | *DataType* | *UIType* | *related FCO Field* | *Constraints* | *Commandline* |
+| isTrusted | BOOLEAN | CHECKBOX | userdefined \\ | Userdefined | -isTrusted, Optional,no default |
+
+{panel}
+
+	
+
+[#Index]
+{anchor:editContainerIf.FirewallManagedPortContainer}
+{panel:title=editContainerIf.FirewallManagedPortContainer|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ | org.sblim.wbemsmt.firewall.bl.fco.Linux_FirewallManagedPorts |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.edit |
+| *Actions* | CREATE, DELETE, MODIFY \\ |
+| *CustomLayouter* \\ | X |
+*Fields:*
+| *Fieldname* | *DataType* | *UIType* | *related FCO Field* | *Constraints* | *Commandline* |
+| StartPort | STRING | TEXTFIELD | Linux_FirewallManagedPorts.StartPort \\ | --- | -startPort, Optional,no default |
+| EndPort | STRING | TEXTFIELD | Linux_FirewallManagedPorts.EndPort \\ | --- | -endPort, Optional,no default |
+| Protocol | INTEGER | COMBOBOX | Linux_FirewallManagedPorts.Protocol \\ | --- | -protocol, Optional,no default |
+
+*Relations*
+| *RelationType&nbsp;* | *&nbsp;related DataContainer* \\ | *&nbsp;Additional Information* \\ |
+| Link | [#editContainerIf.FInterfacesForPortContainer] | Rolename: interfacesForPort, Type: LIST |
+{panel}
+
+	
+
+[#Index]
+{anchor:editContainerIf.FirewallServiceConfContainer}
+{panel:title=editContainerIf.FirewallServiceConfContainer|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ | org.sblim.wbemsmt.firewall.bl.fco.Linux_FirewallServiceConfiguration |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.edit |
+| *Actions* | MODIFY \\ |
+| *CustomLayouter* \\ | --- |
+*Fields:*
+| *Fieldname* | *DataType* | *UIType* | *related FCO Field* | *Constraints* | *Commandline* |
+| configurationFile | STRING | TEXTFIELD | Linux_FirewallServiceConfiguration.configurationFile \\ | --- | -configurationFile, Optional,no default |
+| StartService | ACTION | BUTTON | Linux_FirewallService.StartService \\ | --- | -startService, Optional,no default |
+| StopService | ACTION | BUTTON | Linux_FirewallService.StopService \\ | --- | -stopService, Optional,no default |
+| restartService | ACTION | BUTTON | userdefined \\ | Userdefined | -restartService, Optional,no default |
+
+{panel}
+
+	
+
+[#Index]
+{anchor:editContainerIf.FirewallServiceOptionsContainer}
+{panel:title=editContainerIf.FirewallServiceOptionsContainer|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ | org.sblim.wbemsmt.firewall.bl.fco.Linux_FirewallServiceConfiguration |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.edit |
+| *Actions* | MODIFY \\ |
+| *CustomLayouter* \\ | --- |
+*Fields:*
+| *Fieldname* | *DataType* | *UIType* | *related FCO Field* | *Constraints* | *Commandline* |
+| IPTABLES_MODULES | STRING | TEXTFIELD | Linux_FirewallServiceConfiguration.IPTABLES_MODULES \\ | --- | -iPTABLES_MODULES, Optional,no default |
+| IPTABLES_MODULES_UNLOAD | BOOLEAN | CHECKBOX | Linux_FirewallServiceConfiguration.IPTABLES_MODULES_UNLOAD \\ | --- | -iPTABLES_MODULES_UNLOAD, Optional,no default |
+| IPTABLES_SAVE_COUNTER | BOOLEAN | CHECKBOX | Linux_FirewallServiceConfiguration.IPTABLES_SAVE_COUNTER \\ | --- | -iPTABLES_SAVE_COUNTER, Optional,no default |
+| IPTABLES_SAVE_ON_RESTART | BOOLEAN | CHECKBOX | Linux_FirewallServiceConfiguration.IPTABLES_SAVE_ON_RESTART \\ | --- | -iPTABLES_SAVE_ON_RESTART, Optional,no default |
+| IPTABLES_SAVE_ON_STOP | BOOLEAN | CHECKBOX | Linux_FirewallServiceConfiguration.IPTABLES_SAVE_ON_STOP \\ | --- | -iPTABLES_SAVE_ON_STOP, Optional,no default |
+| IPTABLES_STATUS_LINENUMBERS | BOOLEAN | CHECKBOX | Linux_FirewallServiceConfiguration.IPTABLES_STATUS_LINENUMBERS \\ | --- | -iPTABLES_STATUS_LINENUMBERS, Optional,no default |
+| IPTABLES_STATUS_NUMERIC | BOOLEAN | CHECKBOX | Linux_FirewallServiceConfiguration.IPTABLES_STATUS_NUMERIC \\ | --- | -iPTABLES_STATUS_NUMERIC, Optional,no default |
+| IPTABLES_STATUS_VERBOSE | BOOLEAN | CHECKBOX | Linux_FirewallServiceConfiguration.IPTABLES_STATUS_VERBOSE \\ | --- | -iPTABLES_STATUS_VERBOSE, Optional,no default |
+
+{panel}
+
+	
+
+[#Index]
+{anchor:editContainerIf.FirewallSupportedServicesContainer}
+{panel:title=editContainerIf.FirewallSupportedServicesContainer|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ |  ---  |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.edit |
+| *Actions* | MODIFY \\ |
+| *CustomLayouter* \\ | X |
+*Fields:*
+| *Fieldname* | *DataType* | *UIType* | *related FCO Field* | *Constraints* | *Commandline* |
+| enableOnInterface | BOOLEAN | CHECKBOX | userdefined \\ | Userdefined | -enableOnInterface, Optional,no default |
+
+{panel}
+
+	
+
+[#Index]
+{anchor:editContainerIf.WelcomeContainer}
+{panel:title=editContainerIf.WelcomeContainer|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ |  ---  |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.edit |
+| *Actions* | --- \\ |
+| *CustomLayouter* \\ | --- |
+
+{panel}
+
+	
+
+[#Index]
+{anchor:wizardContainerIf.NewManagedPortWizard1Container}
+{panel:title=wizardContainerIf.NewManagedPortWizard1Container|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ |  ---  |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.wizard |
+| *Actions* | MODIFY, WIZARD \\ |
+| *CustomLayouter* \\ | X |
+*Fields:*
+| *Fieldname* | *DataType* | *UIType* | *related FCO Field* | *Constraints* | *Commandline* |
+| StartPort | STRING | TEXTFIELD | userdefined \\ | Userdefined | -StartPort, Required |
+| EndPort | STRING | TEXTFIELD | userdefined \\ | Userdefined | -EndPort, Optional,no default |
+| Protocol | INTEGER | COMBOBOX | userdefined \\ | Userdefined | -Protocol, Required |
+
+{panel}
+
+	
+
+[#Index]
+{anchor:wizardContainerIf.NewManagedPortWizard2Container}
+{panel:title=wizardContainerIf.NewManagedPortWizard2Container|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ |  ---  |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.wizard |
+| *Actions* | MODIFY, WIZARD \\ |
+| *CustomLayouter* \\ | --- |
+*Fields:*
+| *Fieldname* | *DataType* | *UIType* | *related FCO Field* | *Constraints* | *Commandline* |
+| StartPort | STRING | TEXTFIELD | userdefined \\ | Readonly, Userdefined | -startPort, Optional,no default |
+| EndPort | STRING | TEXTFIELD | userdefined \\ | Readonly, Userdefined | -endport, Optional,no default |
+| Protocol | STRING | TEXTFIELD | userdefined \\ | Readonly, Userdefined | -protocol, Optional,no default |
+
+*Relations*
+| *RelationType&nbsp;* | *&nbsp;related DataContainer* \\ | *&nbsp;Additional Information* \\ |
+| Link | [#editContainerIf.FInterfacesForServicesContainer] | Rolename: interfacesListForPort, Type: LIST |
+{panel}
+
+	
+
+[#Index]
+{anchor:wizardContainerIf.NewManagedPortWizard3Container}
+{panel:title=wizardContainerIf.NewManagedPortWizard3Container|titleBGColor=#CCE5FF| bgColor=#FFFFFF}
+
+| *Description* |  \\ |
+| *Related FCO*\\ |  ---  |
+| *Adapter* \\ | FirewallCimAdapter |
+| *Package* \\ | Interface: org.sblim.wbemsmt.firewall.bl.container.wizard |
+| *Actions* | CREATE, WIZARD \\ |
+| *CustomLayouter* \\ | --- |
+*Fields:*
+| *Fieldname* | *DataType* | *UIType* | *related FCO Field* | *Constraints* | *Commandline* |
+| StartPort | STRING | TEXTFIELD | userdefined \\ | Readonly, Userdefined | -startport, Optional,no default |
+| EndPort | STRING | TEXTFIELD | userdefined \\ | Readonly, Userdefined | -endport, Optional,no default |
+| Protocol | STRING | TEXTFIELD | userdefined \\ | Readonly, Userdefined | -protocol, Optional,no default |
+
+*Relations*
+| *RelationType&nbsp;* | *&nbsp;related DataContainer* \\ | *&nbsp;Additional Information* \\ |
+| Link | [#editContainerIf.FInterfacesForPortSummaryContainer] | Rolename: interfacesListForPortSummary, Type: LIST |
+{panel}
